@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2016 The Android Open Source Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <!-- Name for the application [CHAR LIMIT=12] -->
+    <string name="app_name">CoinGrade2</string>
+
+    <!-- Label for overflow menu option that inserts fake pet data into the app [CHAR LIMIT=20] -->
+    <string name="action_insert_dummy_data">Insert Dummy Data</string>
+
+    <!-- Label for overflow menu option that deletes all pet data in the app [CHAR LIMIT=20] -->
+    <string name="action_delete_all_entries">Delete All Pets</string>
+
+    <!-- Title text for the empty view, which describes the empty dog house image [CHAR LIMIT=50] -->
+    <string name="empty_view_title_text">It\'s a bit lonely here...</string>
+
+    <!-- Subtitle text for the empty view that prompts the user to add a coin series [CHAR LIMIT=50] -->
+    <string name="empty_view_subtitle_text">Get started by adding a coin series</string>
+
+    <!-- Title for the activity to add a new coin series [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_new_coin_series">Add a coin series</string>
+
+    <!-- Title for the activity to edit an existing coin series [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_edit_coin_series">Edit a series information</string>
+
+    <!-- Label for editor menu option to save and leave editor [CHAR LIMIT=20] -->
+    <string name="action_save">Save</string>
+
+    <!-- Label for editor overflow menu option to clear a coins data [CHAR LIMIT=20] -->
+    <string name="action_clear">Clear</string>
+
+    <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
+    <string name="category_overview">Overview</string>
+
+    <!-- Label for gender information in the editor [CHAR LIMIT=30] -->
+    <string name="category_gender">Series</string>
+
+    <!-- Label for measurement information in the editor [CHAR LIMIT=30] -->
+    <string name="category_measurement">Measurement</string>
+
+    <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_name">Name</string>
+
+    <!-- Label for dropdown menu option if the pet's gender is unknown [CHAR LIMIT=20] -->
+    <string name="gender_unknown">Lincoln Cent (1909-2016)</string>
+
+    <!-- Label for dropdown menu option if the pet is male [CHAR LIMIT=20] -->
+    <string name="gender_male">Flying Eagle Cent (1856-1858)</string>
+
+    <!-- Label for dropdown menu option if the pet is female [CHAR LIMIT=20] -->
+    <string name="gender_female">Two Cent Pieces (1864-1873)</string>
+
+    <!-- Toast message in editor when new coin series has been successfully inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_coin_series_successful">Series saved</string>
+
+    <!-- Toast message in editor when new coin series has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_coin_series_failed">Error with saving series</string>
+
+    <!-- Toast message in editor when inputs do not pass validation [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_validation_failed">Error saving series information. Must have a name less than 30 characters.</string>
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+    <string name="discard">Discard</string>
+    <string name="keep_editing">Keep Editing</string>
+    <!-- Toast message in editor when current pet was successfully deleted [CHAR LIMIT=NONE] -->
+    <string name="editor_delete_pet_successful">Pet deleted</string>
+
+    <!-- Toast message in editor when current pet has failed to be deleted [CHAR LIMIT=NONE] -->
+    <string name="editor_delete_pet_failed">Error with deleting pet</string>
+
+    <!-- Dialog message to ask the user to confirm deleting the current pet [CHAR LIMIT=NONE] -->
+    <string name="delete_dialog_msg">Delete this pet?</string>
+
+    <!-- Dialog button text for the option to confirm deleting the current pet [CHAR LIMIT=20] -->
+    <string name="delete">Delete</string>
+
+    <!-- Dialog button text for the option to cancel deletion of the current pet [CHAR LIMIT=20] -->
+    <string name="cancel">Cancel</string>
+    <string name="editor_delete_pet_failed_msg">Delete of pet data failed</string>
+    <string name="title_activity_series">activity_series</string>
+    <string name="issue">Issue:</string>
+    <string name="overall_grade_label">Overall grade:</string>
+    <string name="obverse_grade_label">Obverse grade:</string>
+    <string name="reverse_grade_label">Reverse grade:</string>
+    <string name="obverse_picture_label">Obverse:</string>
+    <string name="reverse_picture_label">Reverse:</string>
+    <string name="notes_label">Notes:</string>
+    <string name="hint_notes">Enter additional information about the coin</string>
+    <string name="editor_activity_title_issue_details">Details</string>
+    <string name="editor_activity_title_edit_details">Details 2</string>
+
+    <!-- Coin grade values -->
+    <string name="grade_unknown">Unknown</string>
+    <string name="grade_about_good">AG-3</string>
+    <string name="grade_good">G-4</string>
+    <string name="grade_very_good">VG-8</string>
+    <string name="grade_fine">F-12</string>
+    <string name="grade_very_fine">VF-20</string>
+    <string name="grade_choice_very_fine">VF-30</string>
+    <string name="grade_extremely_fine">EF-40</string>
+    <string name="grade_choice_extremely_fine">EF-45</string>
+    <string name="grade_about_uncirculated">AU-50</string>
+    <string name="grade_choice_about_uncirculated">AU-55</string>
+    <string name="grade_very_choice_about_uncirculated">AU-58</string>
+    <string name="grade_ms_60">MS-60</string>
+    <string name="grade_ms_61">MS-61</string>
+    <string name="grade_ms_62">MS-62</string>
+    <string name="grade_ms_63">MS-63</string>
+    <string name="grade_ms_64">MS-64</string>
+    <string name="grade_ms_65">MS-65</string>
+    <string name="grade_ms_66">MS-66</string>
+    <string name="grade_ms_67">MS-67</string>
+    <string name="grade_ms_68">MS-68</string>
+    <string name="grade_ms_69">MS-69</string>
+    <string name="grade_ms_70">MS-70</string>
+    <string name="grade_proof">Proof</string>
+
+    <string name="category_notes">Notes:</string>
+    <string name="action_details">Details</string>
+    <string name="action_edit">Edit</string>
+    <!-- Toast message in editor when coin information has been successfully inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_coin_update_successful">Coin saved</string>
+    <!-- Toast message in editor when new coin series has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_coin_update_failed">Error with saving coin</string>
+
+</resources>
