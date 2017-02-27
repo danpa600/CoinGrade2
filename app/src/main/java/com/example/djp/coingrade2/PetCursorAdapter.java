@@ -17,7 +17,6 @@ package com.example.djp.coingrade2;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,11 +98,17 @@ public class PetCursorAdapter extends CursorAdapter {
         //summaryTextView.setText(petBreed);
         //tvWeight.setText(weight);
         switch (gender) {
-            case PetEntry.GENDER_FEMALE:
-                tvGender.setText(context.getString(R.string.gender_female));
+            case PetEntry.SERIES_THREE_CENT_NICKEL:
+                tvGender.setText(context.getString(R.string.series_three_cent_nickel));
                 break;
-            case PetEntry.GENDER_MALE:
-                tvGender.setText(context.getString(R.string.gender_male));
+            case PetEntry.SERIES_THREE_CENT_SILVER:
+                tvGender.setText(context.getString(R.string.series_three_cent_silver));
+                break;
+            case PetEntry.SERIES_TWO_CENT_PIECES:
+                tvGender.setText(context.getString(R.string.series_two_cent_pieces));
+                break;
+            case PetEntry.SERIES_FLYING_EAGLE_CENT:
+                tvGender.setText(context.getString(R.string.series_flying_eagle_cent));
                 break;
             default:
                 tvGender.setText(context.getString(R.string.gender_unknown));

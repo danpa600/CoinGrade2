@@ -41,6 +41,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.djp.coingrade2.data.PetContract;
 import com.example.djp.coingrade2.data.PetContract.PetEntry;
 //import com.example.android.pets.data.PetDbHelper;
 
@@ -66,11 +67,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     /**
      * Gender of the pet. The possible valid values are in the PetContract.java file:
-     * {@link PetEntry#GENDER_UNKNOWN}, {@link PetEntry#GENDER_MALE}, or
-     * {@link PetEntry#GENDER_FEMALE}.
+     * {@link PetEntry#GENDER_UNKNOWN}, {@link PetEntry#SERIES_FLYING_EAGLE_CENT}, or
+     * {@link PetEntry#SERIES_TWO_CENT_PIECES}.
      */
-    private int mGender = PetEntry.GENDER_UNKNOWN;
-    private Uri mCurrentPetUri;
+    private int mSeries = PetEntry.GENDER_UNKNOWN;
+    private Uri mCurrentSeriesUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +85,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // Otherwise if this is a new pet, the uri is null so app bar says "Add a Pet"
         // Get the intent and determine what mode we should be in
         Intent intent = getIntent();
-        mCurrentPetUri = intent.getData();
+        mCurrentSeriesUri = intent.getData();
 
-        if (mCurrentPetUri == null) {
+        if (mCurrentSeriesUri == null) {
             // New pet - update title to state adding a pet
             setTitle(getString(R.string.editor_activity_title_new_coin_series));
             //invalidate the options menu, so the Delete menu option can be hidden
@@ -133,12 +134,16 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selection = (String) parent.getItemAtPosition(position);
                 if (!TextUtils.isEmpty(selection)) {
-                    if (selection.equals(getString(R.string.gender_male))) {
-                        mGender = PetEntry.GENDER_MALE;
-                    } else if (selection.equals(getString(R.string.gender_female))) {
-                        mGender = PetEntry.GENDER_FEMALE;
+                    if (selection.equals(getString(R.string.series_flying_eagle_cent))) {
+                        mSeries = PetEntry.SERIES_FLYING_EAGLE_CENT;
+                    } else if (selection.equals(getString(R.string.series_two_cent_pieces))) {
+                        mSeries = PetEntry.SERIES_TWO_CENT_PIECES;
+                    } else if (selection.equals(getString(R.string.series_three_cent_silver))) {
+                        mSeries = PetEntry.SERIES_THREE_CENT_SILVER;
+                    } else if (selection.equals(getString(R.string.series_three_cent_nickel))) {
+                        mSeries = PetEntry.SERIES_THREE_CENT_NICKEL;
                     } else {
-                        mGender = PetEntry.GENDER_UNKNOWN;
+                        mSeries = PetEntry.GENDER_UNKNOWN;
                     }
                 }
             }
@@ -146,7 +151,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mGender = PetEntry.GENDER_UNKNOWN;
+                mSeries = PetEntry.GENDER_UNKNOWN;
             }
         });
     }
@@ -203,7 +208,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             ContentValues values = new ContentValues();
             values.put(PetEntry.COLUMN_PET_NAME, nameString);
             values.put(PetEntry.COLUMN_PET_BREED, breedString);
-            values.put(PetEntry.COLUMN_PET_GENDER, mGender);
+            values.put(PetEntry.COLUMN_PET_GENDER, mSeries);
             // Use getIntent() and getData() to ge the associated URI
             // Set title of EditorActivity on which situation we have
             // If opened using the ListView item, then we will have a uri
@@ -211,9 +216,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Otherwise if this is a new pet, the uri is null so app bar says "Add a Pet"
             // Get the intent and determine what mode we should be in
             Intent intent = getIntent();
-            mCurrentPetUri = intent.getData();
+            mCurrentSeriesUri = intent.getData();
 
-            if (mCurrentPetUri == null) {
+            if (mCurrentSeriesUri == null) {
                 // Insert a new row for pet in the database, returning the ID of that new row.
                 Uri uri = getContentResolver().insert(PetEntry.CONTENT_URI, values);
                 // Show a toast message depending on whether or not the insertion was successful
@@ -225,7 +230,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     Toast.makeText(this, getString(R.string.editor_insert_coin_series_successful), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                int row = getContentResolver().update(mCurrentPetUri, values, null, null);
+                int row = getContentResolver().update(mCurrentSeriesUri, values, null, null);
                 if (row == 0) {
                     // If the row ID is -1, then there was an error with insertion.
                     Toast.makeText(this, getString(R.string.editor_insert_coin_series_failed), Toast.LENGTH_SHORT).show();
@@ -251,7 +256,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         // If this is a new pet, hide the "Delete" menu item.
-        if (mCurrentPetUri == null) {
+        if (mCurrentSeriesUri == null) {
             MenuItem menuItem = menu.findItem(R.id.action_delete);
             menuItem.setVisible(false);
         }
@@ -325,7 +330,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 PetEntry.COLUMN_PET_GENDER};
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,  //Parent activity context
-                mCurrentPetUri,  // Provider content URI to query
+                mCurrentSeriesUri,  // Provider content URI to query
                 projection,             // columns to include in the results cursor
                 null,                   //No selection clause
                 null,                   //No selection arguments
@@ -355,11 +360,17 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // into one of the dropdown options (0 is Unknown, 1 is Male, 2 is Female).
             // Then call setSelection() so that option is displayed on screen as the current selection.
             switch (gender) {
-                case PetEntry.GENDER_MALE:
+                case PetEntry.SERIES_FLYING_EAGLE_CENT:
                     mGenderSpinner.setSelection(1);
                     break;
-                case PetEntry.GENDER_FEMALE:
+                case PetEntry.SERIES_TWO_CENT_PIECES:
                     mGenderSpinner.setSelection(2);
+                    break;
+                case PetEntry.SERIES_THREE_CENT_SILVER:
+                    mGenderSpinner.setSelection(3);
+                    break;
+                case PetEntry.SERIES_THREE_CENT_NICKEL:
+                    mGenderSpinner.setSelection(PetEntry.SERIES_THREE_CENT_NICKEL);
                     break;
                 default:
                     mGenderSpinner.setSelection(0);
@@ -426,9 +437,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
      */
     private void deletePet() {
 
-        if (mCurrentPetUri != null) {
+        if (mCurrentSeriesUri != null) {
             // Insert a new row for pet in the database, returning the ID of that new row.
-            int deletedRows = getContentResolver().delete(mCurrentPetUri, null, null);
+            int deletedRows = getContentResolver().delete(mCurrentSeriesUri, null, null);
             // Show a toast message depending on whether or not the insertion was successful
             if (deletedRows == 0) {
                 // If the row ID is not 1, then there was an error with deletion.

@@ -8,15 +8,12 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.djp.coingrade2.data.PetContract;
@@ -76,10 +73,16 @@ public class SeriesActivity extends AppCompatActivity implements LoaderManager.L
                     case PetContract.PetEntry.GENDER_UNKNOWN:
                         currentSeriesUri = ContentUris.withAppendedId(PetContract.LincolnSeriesEntry.CONTENT_URI, id);
                         break;
-                    case PetContract.PetEntry.GENDER_FEMALE:
+                    case PetContract.PetEntry.SERIES_TWO_CENT_PIECES:
                         currentSeriesUri = ContentUris.withAppendedId(PetContract.TwoCentSeriesEntry.CONTENT_URI, id);
                         break;
-                    case PetContract.PetEntry.GENDER_MALE:
+                    case PetContract.PetEntry.SERIES_THREE_CENT_SILVER:
+                        currentSeriesUri = ContentUris.withAppendedId(PetContract.ThreeCentSilverSeriesEntry.CONTENT_URI, id);
+                        break;
+                    case PetContract.PetEntry.SERIES_THREE_CENT_NICKEL:
+                        currentSeriesUri = ContentUris.withAppendedId(PetContract.ThreeCentNickelSeriesEntry.CONTENT_URI, id);
+                        break;
+                    case PetContract.PetEntry.SERIES_FLYING_EAGLE_CENT:
                         currentSeriesUri = ContentUris.withAppendedId(PetContract.FlyingEagleSeriesEntry.CONTENT_URI, id);
                         break;
                     default:
@@ -157,10 +160,16 @@ public class SeriesActivity extends AppCompatActivity implements LoaderManager.L
             case PetContract.PetEntry.GENDER_UNKNOWN:
                 currentSeriesUri = PetContract.LincolnSeriesEntry.CONTENT_URI;
                 break;
-            case PetContract.PetEntry.GENDER_FEMALE:
+            case PetContract.PetEntry.SERIES_TWO_CENT_PIECES:
                 currentSeriesUri = PetContract.TwoCentSeriesEntry.CONTENT_URI;
                 break;
-            case PetContract.PetEntry.GENDER_MALE:
+            case PetContract.PetEntry.SERIES_THREE_CENT_SILVER:
+                currentSeriesUri = PetContract.ThreeCentSilverSeriesEntry.CONTENT_URI;
+                break;
+            case PetContract.PetEntry.SERIES_THREE_CENT_NICKEL:
+                currentSeriesUri = PetContract.ThreeCentNickelSeriesEntry.CONTENT_URI;
+                break;
+            case PetContract.PetEntry.SERIES_FLYING_EAGLE_CENT:
                 currentSeriesUri = PetContract.FlyingEagleSeriesEntry.CONTENT_URI;
                 break;
             default:

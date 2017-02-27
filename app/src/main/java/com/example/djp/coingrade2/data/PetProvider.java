@@ -47,6 +47,12 @@ public class PetProvider extends ContentProvider {
     /** URI matcher code for the content URI for the Flying Eagle cent table */
     private static final int TWO_CENTS = 106;
     private static final int TWO_CENTS_ID = 107;
+    /** URI matcher code for the content URI for the Three cent silver table */
+    private static final int THREE_CENT_SILVER = 108;
+    private static final int THREE_CENT_SILVER_ID = 109;
+    /** URI matcher code for the content URI for the Three cent nickel table */
+    private static final int THREE_CENT_NICKEL = 110;
+    private static final int THREE_CENT_NICKEL_ID = 111;
     /** Tag for the log messages */
     public static final String LOG_TAG = PetProvider.class.getSimpleName();
     /**
@@ -68,6 +74,10 @@ public class PetProvider extends ContentProvider {
         sUriMatcher.addURI(PetContract.CONTENT_AUTHORITY,PetContract.PATH_FLYING_EAGLE_SERIES + "/#",FLYING_EAGLE_CENTS_ID);
         sUriMatcher.addURI(PetContract.CONTENT_AUTHORITY,PetContract.PATH_TWO_CENT_SERIES,TWO_CENTS);
         sUriMatcher.addURI(PetContract.CONTENT_AUTHORITY,PetContract.PATH_TWO_CENT_SERIES + "/#",TWO_CENTS_ID);
+        sUriMatcher.addURI(PetContract.CONTENT_AUTHORITY,PetContract.PATH_THREE_CENT_SILVER_SERIES,THREE_CENT_SILVER);
+        sUriMatcher.addURI(PetContract.CONTENT_AUTHORITY,PetContract.PATH_THREE_CENT_SILVER_SERIES + "/#",THREE_CENT_SILVER_ID);
+        sUriMatcher.addURI(PetContract.CONTENT_AUTHORITY,PetContract.PATH_THREE_CENT_NICKEL_SERIES,THREE_CENT_NICKEL);
+        sUriMatcher.addURI(PetContract.CONTENT_AUTHORITY,PetContract.PATH_THREE_CENT_NICKEL_SERIES + "/#",THREE_CENT_NICKEL_ID);
     }
 
     @Override
@@ -145,12 +155,32 @@ public class PetProvider extends ContentProvider {
             case TWO_CENTS_ID:
                 selection = PetContract.CoinSeriesEntry._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
-
-                // This will perform a query on the pets table where the _id equals 3 to return a
-                // Cursor containing that row of the table.
-            cursor = database.query(PetContract.TwoCentSeriesEntry.TABLE_NAME, projection, selection, selectionArgs,
+                cursor = database.query(PetContract.TwoCentSeriesEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
+
+            case THREE_CENT_SILVER:
+                cursor = database.query(PetContract.ThreeCentSilverSeriesEntry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+            case THREE_CENT_SILVER_ID:
+                selection = PetContract.CoinSeriesEntry._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                cursor = database.query(PetContract.ThreeCentSilverSeriesEntry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+
+            case THREE_CENT_NICKEL:
+                cursor = database.query(PetContract.ThreeCentNickelSeriesEntry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+            case THREE_CENT_NICKEL_ID:
+                selection = PetContract.CoinSeriesEntry._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                cursor = database.query(PetContract.ThreeCentNickelSeriesEntry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+
             default:
                 throw new IllegalArgumentException("PET Cannot query unknown URI " + uri);
         }
@@ -200,7 +230,7 @@ public class PetProvider extends ContentProvider {
 
         // Check that the gender is one of the three valid values
         int gender = values.getAsInteger(PetEntry.COLUMN_PET_GENDER);
-        if (!PetEntry.isValidGender(gender)) {
+        if (!PetEntry.isValidSeries(gender)) {
             throw new IllegalArgumentException("Pet gender must be set to Unknown, Female or Male.");
         }
         // Get writable database
@@ -273,6 +303,14 @@ public class PetProvider extends ContentProvider {
                 selection = PetContract.CoinSeriesEntry._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
                 return updateCoin(uri, contentValues, selection, selectionArgs);
+            case THREE_CENT_SILVER_ID:
+                selection = PetContract.CoinSeriesEntry._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                return updateCoin(uri, contentValues, selection, selectionArgs);
+            case THREE_CENT_NICKEL_ID:
+                selection = PetContract.CoinSeriesEntry._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                return updateCoin(uri, contentValues, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("PET Update is not supported for " + uri);
         }
@@ -287,7 +325,7 @@ public class PetProvider extends ContentProvider {
             if (containsGender) {
                 // Check that the gender is one of the three valid values
                 int gender = contentValues.getAsInteger(PetEntry.COLUMN_PET_GENDER);
-                if (!PetEntry.isValidGender(gender)) {
+                if (!PetEntry.isValidSeries(gender)) {
                     throw new IllegalArgumentException("Pet gender must be set to Unknown, Female or Male.(update)");
                 }
             }
@@ -341,6 +379,12 @@ public class PetProvider extends ContentProvider {
                     break;
                 case TWO_CENTS_ID:
                     rowsUpdated = database.update(PetContract.TwoCentSeriesEntry.TABLE_NAME, contentValues, selection, selectionArgs);
+                    break;
+                case THREE_CENT_SILVER_ID:
+                    rowsUpdated = database.update(PetContract.ThreeCentSilverSeriesEntry.TABLE_NAME, contentValues, selection, selectionArgs);
+                    break;
+                case THREE_CENT_NICKEL_ID:
+                    rowsUpdated = database.update(PetContract.ThreeCentNickelSeriesEntry.TABLE_NAME, contentValues, selection, selectionArgs);
                     break;
                 default:
                     rowsUpdated = 0;

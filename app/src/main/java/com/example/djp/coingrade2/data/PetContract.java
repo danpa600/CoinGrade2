@@ -16,16 +16,11 @@
 package com.example.djp.coingrade2.data;
 
 import android.content.ContentResolver;
-import android.content.res.Resources;
 import android.net.Uri;
-import android.os.StrictMode;
 import android.provider.BaseColumns;
-import android.util.StringBuilderPrinter;
 
 import com.example.djp.coingrade2.App;
 import com.example.djp.coingrade2.R;
-
-import static android.net.Uri.*;
 
 /**
  * API Contract for the Pets app.
@@ -58,6 +53,8 @@ public final class PetContract {
     public static final String PATH_LINCOLN_SERIES = "lincoln_series";
     public static final String PATH_FLYING_EAGLE_SERIES = "flying_eagle_series";
     public static final String PATH_TWO_CENT_SERIES = "two_cent_series";
+    public static final String PATH_THREE_CENT_SILVER_SERIES = "three_cent_silver_series";
+    public static final String PATH_THREE_CENT_NICKEL_SERIES = "three_cent_nickel_series";
 
     /**
      * Inner class that defines constant values for the pets database table.
@@ -107,8 +104,8 @@ public final class PetContract {
         /**
          * Gender of the pet.
          *
-         * The only possible values are {@link #GENDER_UNKNOWN}, {@link #GENDER_MALE},
-         * or {@link #GENDER_FEMALE}.
+         * The only possible values are {@link #GENDER_UNKNOWN}, {@link #SERIES_FLYING_EAGLE_CENT},
+         * or {@link #SERIES_TWO_CENT_PIECES}.
          *
          * Type: INTEGER
          */
@@ -125,31 +122,41 @@ public final class PetContract {
          * Possible values for the gender of the pet.
          */
         public static final int GENDER_UNKNOWN = 0;
-        public static final int GENDER_MALE = 1;
-        public static final int GENDER_FEMALE = 2;
+        public static final int SERIES_FLYING_EAGLE_CENT = 1;
+        public static final int SERIES_TWO_CENT_PIECES = 2;
+        public static final int SERIES_THREE_CENT_SILVER = 3;
+        public static final int SERIES_THREE_CENT_NICKEL = 4;
 
         // Convert db int value to string for series
-        public static String toString(int gender) {
-            String genderString = "";
-            switch (gender) {
-                case (GENDER_FEMALE):
-                    genderString = App.getContext().getResources().getString(R.string.gender_female);
+        public static String toString(int series) {
+            String seriesString = "";
+            switch (series) {
+                case (SERIES_TWO_CENT_PIECES):
+                    seriesString = App.getContext().getResources().getString(R.string.series_two_cent_pieces);
                     break;
-                case (GENDER_MALE):
-                    genderString = App.getContext().getResources().getString(R.string.gender_male);
+                case (SERIES_FLYING_EAGLE_CENT):
+                    seriesString = App.getContext().getResources().getString(R.string.series_flying_eagle_cent);
+                    break;
+                case (SERIES_THREE_CENT_SILVER):
+                    seriesString = App.getContext().getResources().getString(R.string.series_three_cent_silver);
+                    break;
+                case (SERIES_THREE_CENT_NICKEL):
+                    seriesString = App.getContext().getResources().getString(R.string.series_three_cent_nickel);
                     break;
                 default:
-                    genderString = App.getContext().getResources().getString(R.string.gender_unknown);
+                    seriesString = App.getContext().getResources().getString(R.string.gender_unknown);
                     break;
             }
-            return genderString;
+            return seriesString;
         }
         /**
-         * Returns whether or not the given gender is {@link #GENDER_UNKNOWN}, {@link #GENDER_MALE},
-         * or {@link #GENDER_FEMALE}.
+         * Returns whether or not the given gender is {@link #GENDER_UNKNOWN}, {@link #SERIES_FLYING_EAGLE_CENT},
+         * or {@link #SERIES_TWO_CENT_PIECES}.
          */
-        public static boolean isValidGender(int gender) {
-            if (gender == GENDER_UNKNOWN || gender == GENDER_MALE || gender == GENDER_FEMALE) {
+        public static boolean isValidSeries(int gender) {
+            if (gender == GENDER_UNKNOWN || gender == SERIES_FLYING_EAGLE_CENT ||
+                    gender == SERIES_TWO_CENT_PIECES || gender == SERIES_THREE_CENT_SILVER ||
+                    gender == SERIES_THREE_CENT_NICKEL) {
                 return true;
             }
             return false;
@@ -210,6 +217,44 @@ public final class PetContract {
 
         /** Name of database table for Flying Eagle Cents */
         public final static String TABLE_NAME = "twoCentSeries";
+    }
+
+    public static final class ThreeCentSilverSeriesEntry extends CoinSeriesEntry {
+
+        /** The content URI to access the series data in the provider */
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_THREE_CENT_SILVER_SERIES);
+        /**
+         * The MIME type of the {@link #BASE_CONTENT_URI} for a list of issues in a series.
+         */
+        public static final String CONTENT_LIST_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_THREE_CENT_SILVER_SERIES;
+        /**
+         * The MIME type of the {@link #BASE_CONTENT_URI} for a coin series.
+         */
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_THREE_CENT_SILVER_SERIES;
+
+        /** Name of database table for Flying Eagle Cents */
+        public final static String TABLE_NAME = "threeCentSilverSeries";
+    }
+
+    public static final class ThreeCentNickelSeriesEntry extends CoinSeriesEntry {
+
+        /** The content URI to access the series data in the provider */
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_THREE_CENT_NICKEL_SERIES);
+        /**
+         * The MIME type of the {@link #BASE_CONTENT_URI} for a list of issues in a series.
+         */
+        public static final String CONTENT_LIST_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_THREE_CENT_NICKEL_SERIES;
+        /**
+         * The MIME type of the {@link #BASE_CONTENT_URI} for a coin series.
+         */
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_THREE_CENT_NICKEL_SERIES;
+
+        /** Name of database table for Flying Eagle Cents */
+        public final static String TABLE_NAME = "threeCentNickelSeries";
     }
 
     // Base Class for the coin series

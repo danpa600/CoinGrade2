@@ -49,14 +49,12 @@
     <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
     <string name="hint_name">Name</string>
 
-    <!-- Label for dropdown menu option if the pet's gender is unknown [CHAR LIMIT=20] -->
+    <!-- Label for series dropdown menu option [CHAR LIMIT=20] -->
     <string name="gender_unknown">Lincoln Cent (1909-2016)</string>
-
-    <!-- Label for dropdown menu option if the pet is male [CHAR LIMIT=20] -->
-    <string name="gender_male">Flying Eagle Cent (1856-1858)</string>
-
-    <!-- Label for dropdown menu option if the pet is female [CHAR LIMIT=20] -->
-    <string name="gender_female">Two Cent Pieces (1864-1873)</string>
+    <string name="series_flying_eagle_cent">Flying Eagle Cent (1856-1858)</string>
+    <string name="series_two_cent_pieces">Two Cent Pieces (1864-1873)</string>
+    <string name="series_three_cent_silver">Three Cent Silver (1851-1873)</string>
+    <string name="series_three_cent_nickel">Three Cent Nickel (1865-1889)</string>
 
     <!-- Toast message in editor when new coin series has been successfully inserted [CHAR LIMIT=NONE] -->
     <string name="editor_insert_coin_series_successful">Series saved</string>
