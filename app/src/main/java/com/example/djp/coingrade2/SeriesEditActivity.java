@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.djp.coingrade2.data.PetContract;
+import com.example.djp.coingrade2.data.PetProvider;
 
 import java.io.File;
 import java.io.IOException;
@@ -83,12 +85,12 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
 
         if (mCurrentPetUri == null) {
             // New pet - update title to state adding a pet
-            setTitle(getString(R.string.editor_activity_title_issue_details));
+            //setTitle(getString(R.string.editor_activity_title_issue_details));
             //invalidate the options menu, so the Delete menu option can be hidden
             invalidateOptionsMenu();
         } else {
             // Edit existing Pet - update title
-            setTitle(getString(R.string.editor_activity_title_edit_details));
+            //setTitle(getString(R.string.editor_activity_title_edit_details));
             // Initialize a loader to read the data from the database
             // and display the current values in the editor
             getLoaderManager().initLoader(EXISTING_SERIES_LOADER, null, this);
@@ -165,7 +167,13 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
             }
 
             // Update the views on the screen with the values from the database
-            setTitle(issue.toString());
+            //setTitle(issue.toString());
+            Toolbar toolbar = (Toolbar) findViewById(R.id.edit_entry_toolbar);
+            toolbar.setTitle(issue.toString());
+            toolbar.setSubtitle(PetProvider.convertToString(mCurrentPetUri));
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
             mNotesEditText.setText(notes);
 
             setGradeSpinnerSelection(grade, mGradeSpinner);
@@ -509,8 +517,14 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
         switch (item.getItemId()) {
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
-                // Save pet to database
+                // Save coin to database
                 saveCoin();
+                // Exit activity
+                finish();
+                return true;
+            case R.id.action_clear:
+                // Remove coin's information
+                clearCoinInformation();
                 // Exit activity
                 finish();
                 return true;
@@ -613,6 +627,66 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
                 // If the row ID is -1, then there was an error with insertion.
                 Toast.makeText(this, getString(R.string.editor_coin_update_failed), Toast.LENGTH_SHORT).show();
             } else {
+                // Otherwise, the insertion was successful and we can display a toast with the row ID.
+                Toast.makeText(this, getString(R.string.editor_coin_update_successful), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    private void clearCoinInformation() {
+        // Null the fields
+        String nullString = null;
+
+        ContentValues values = new ContentValues();
+        values.put(PetContract.CoinSeriesEntry.COLUMN_NOTES, nullString);
+        values.put(PetContract.CoinSeriesEntry.COLUMN_GRADE, nullString);
+        values.put(PetContract.CoinSeriesEntry.COLUMN_GRADE_OBVERSE, nullString);
+        values.put(PetContract.CoinSeriesEntry.COLUMN_GRADE_REVERSE, nullString);
+        values.put(PetContract.CoinSeriesEntry.COLUMN_IMAGE_OBVERSE, nullString);
+        values.put(PetContract.CoinSeriesEntry.COLUMN_IMAGE_REVERSE, nullString);
+
+        // Use getIntent() and getData() to get the associated URI
+        // Get the intent and determine what mode we should be in
+        Intent intent = getIntent();
+        mCurrentPetUri = intent.getData();
+
+        if (mCurrentPetUri == null) {
+            // Insert a new row for pet in the database, returning the ID of that new row.
+            //Uri uri = getContentResolver().insert(PetContract.LincolnSeriesEntry.CONTENT_URI, values);
+            Uri uri = getContentResolver().insert(mCurrentPetUri, values);
+            // Show a toast message depending on whether or not the insertion was successful
+            if (uri == null) {
+                // If the row ID is -1, then there was an error with insertion.
+                Toast.makeText(this, getString(R.string.editor_coin_update_failed), Toast.LENGTH_SHORT).show();
+            } else {
+                // clear was successful, now remove the images
+                // mObverseImagePath;
+                File dfile = (new File(mObverseImagePath));
+                if (dfile.exists()) {
+                    dfile.delete();
+                }
+                dfile = (new File(mReverseImagePath));
+                if (dfile.exists()) {
+                    dfile.delete();
+                    }
+                // Otherwise, the insertion was successful and we can display a toast with the row ID.
+                Toast.makeText(this, getString(R.string.editor_coin_update_successful), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            int row = getContentResolver().update(mCurrentPetUri, values, null, null);
+            if (row == 0) {
+                // If the row ID is -1, then there was an error with insertion.
+                Toast.makeText(this, getString(R.string.editor_coin_update_failed), Toast.LENGTH_SHORT).show();
+            } else {
+                // clear was successful, now remove the images
+                // mObverseImagePath;
+                File dfile = (new File(mObverseImagePath));
+                if (dfile.exists()) {
+                    dfile.delete();
+                }
+                dfile = (new File(mReverseImagePath));
+                if (dfile.exists()) {
+                    dfile.delete();
+                }
                 // Otherwise, the insertion was successful and we can display a toast with the row ID.
                 Toast.makeText(this, getString(R.string.editor_coin_update_successful), Toast.LENGTH_SHORT).show();
             }
