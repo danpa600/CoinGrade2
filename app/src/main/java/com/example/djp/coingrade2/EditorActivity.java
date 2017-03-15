@@ -41,7 +41,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.djp.coingrade2.data.PetContract;
 import com.example.djp.coingrade2.data.PetContract.PetEntry;
 //import com.example.android.pets.data.PetDbHelper;
 
@@ -257,7 +256,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         super.onPrepareOptionsMenu(menu);
         // If this is a new pet, hide the "Delete" menu item.
         if (mCurrentSeriesUri == null) {
-            MenuItem menuItem = menu.findItem(R.id.action_delete);
+            MenuItem menuItem = menu.findItem(R.id.action_clear);
             menuItem.setVisible(false);
         }
         return true;
@@ -283,7 +282,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 finish();
                 return true;
             // Respond to a click on the "Delete" menu option
-            case R.id.action_delete:
+            case R.id.action_clear:
                 showDeleteConfirmationDialog();
                 // Close the activity
                 //finish();

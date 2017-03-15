@@ -149,6 +149,7 @@ public final class PetContract {
             }
             return seriesString;
         }
+
         /**
          * Returns whether or not the given gender is {@link #GENDER_UNKNOWN}, {@link #SERIES_FLYING_EAGLE_CENT},
          * or {@link #SERIES_TWO_CENT_PIECES}.

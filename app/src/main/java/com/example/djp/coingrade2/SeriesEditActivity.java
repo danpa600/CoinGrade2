@@ -660,14 +660,18 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
             } else {
                 // clear was successful, now remove the images
                 // mObverseImagePath;
-                File dfile = (new File(mObverseImagePath));
-                if (dfile.exists()) {
-                    dfile.delete();
-                }
-                dfile = (new File(mReverseImagePath));
-                if (dfile.exists()) {
-                    dfile.delete();
+                if (mObverseImagePath != null) {
+                    File dfile = (new File(mObverseImagePath));
+                    if (dfile.exists()) {
+                        dfile.delete();
                     }
+                }
+                if (mReverseImagePath != null) {
+                    File dfile = (new File(mReverseImagePath));
+                    if (dfile.exists()) {
+                        dfile.delete();
+                    }
+                }
                 // Otherwise, the insertion was successful and we can display a toast with the row ID.
                 Toast.makeText(this, getString(R.string.editor_coin_update_successful), Toast.LENGTH_SHORT).show();
             }
@@ -679,13 +683,17 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
             } else {
                 // clear was successful, now remove the images
                 // mObverseImagePath;
-                File dfile = (new File(mObverseImagePath));
-                if (dfile.exists()) {
-                    dfile.delete();
+                if (mObverseImagePath != null) {
+                    File dfile = (new File(mObverseImagePath));
+                    if (dfile.exists()) {
+                        dfile.delete();
+                    }
                 }
-                dfile = (new File(mReverseImagePath));
-                if (dfile.exists()) {
-                    dfile.delete();
+                if (mReverseImagePath != null) {
+                    File dfile = (new File(mReverseImagePath));
+                    if (dfile.exists()) {
+                        dfile.delete();
+                    }
                 }
                 // Otherwise, the insertion was successful and we can display a toast with the row ID.
                 Toast.makeText(this, getString(R.string.editor_coin_update_successful), Toast.LENGTH_SHORT).show();

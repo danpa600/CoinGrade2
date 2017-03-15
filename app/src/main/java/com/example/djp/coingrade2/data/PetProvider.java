@@ -24,6 +24,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
+import com.example.djp.coingrade2.App;
+import com.example.djp.coingrade2.R;
 import com.example.djp.coingrade2.data.PetContract.PetEntry;
 
 /**
@@ -361,8 +363,10 @@ public class PetProvider extends ContentProvider {
             // as this field is free text
             if (containsNotes) {
                 String notes = contentValues.getAsString(PetContract.CoinSeriesEntry.COLUMN_NOTES);
-                if (notes.length() > 250) {
-                    throw new IllegalArgumentException("Notes on a coin cannot be greater than 250 characters.");
+                if (notes != null ) {
+                    if (notes.length() > 250) {
+                        throw new IllegalArgumentException("Notes on a coin cannot be greater than 250 characters.");
+                    }
                 }
             }
             // Get writable database
@@ -398,6 +402,32 @@ public class PetProvider extends ContentProvider {
             return rowsUpdated;
         }
         return 0; // no rows updated as there is no values to update.
+    }
+
+
+    public static String convertToString(Uri uri) {
+        final int match = sUriMatcher.match(uri);
+        String uriString;
+        switch (match) {
+            case LINCOLN_CENTS_ID:
+                uriString = App.getContext().getString(R.string.gender_unknown);
+                break;
+            case FLYING_EAGLE_CENTS_ID:
+                uriString = App.getContext().getString(R.string.series_flying_eagle_cent);
+                break;
+            case TWO_CENTS_ID:
+                uriString = App.getContext().getString(R.string.series_two_cent_pieces);
+                break;
+            case THREE_CENT_SILVER_ID:
+                uriString = App.getContext().getString(R.string.series_three_cent_silver);
+                break;
+            case THREE_CENT_NICKEL_ID:
+                uriString = App.getContext().getString(R.string.series_three_cent_nickel);
+                break;
+            default:
+                uriString = "";
+        }
+        return uriString;
     }
 
 }
