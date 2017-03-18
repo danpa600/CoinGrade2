@@ -442,10 +442,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Show a toast message depending on whether or not the insertion was successful
             if (deletedRows == 0) {
                 // If the row ID is not 1, then there was an error with deletion.
-                Toast.makeText(this, getString(R.string.editor_delete_pet_failed_msg), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.editor_delete_failed_msg), Toast.LENGTH_SHORT).show();
             } else {
                 // Otherwise, the insertion was successful and we can display a toast with the row ID.
-                Toast.makeText(this, getString(R.string.editor_delete_pet_successful), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.editor_delete_coin_successful), Toast.LENGTH_SHORT).show();
             }
             // Close the activity
             finish();

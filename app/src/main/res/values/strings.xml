@@ -11,7 +11,7 @@
 -->
 <resources>
     <!-- Name for the application [CHAR LIMIT=12] -->
-    <string name="app_name">CoinGrade2</string>
+    <string name="app_name">CoinGrade</string>
 
     <!-- Label for overflow menu option that inserts fake pet data into the app [CHAR LIMIT=20] -->
     <string name="action_insert_dummy_data">Insert Dummy Data</string>
@@ -29,7 +29,7 @@
     <string name="editor_activity_title_new_coin_series">Add a coin series</string>
 
     <!-- Title for the activity to edit an existing coin series [CHAR LIMIT=20] -->
-    <string name="editor_activity_title_edit_coin_series">Edit a series information</string>
+    <string name="editor_activity_title_edit_coin_series">Edit series information</string>
 
     <!-- Label for editor menu option to save and leave editor [CHAR LIMIT=20] -->
     <string name="action_save">Save</string>
@@ -68,10 +68,10 @@
     <string name="discard">Discard</string>
     <string name="keep_editing">Keep Editing</string>
     <!-- Toast message in editor when current pet was successfully deleted [CHAR LIMIT=NONE] -->
-    <string name="editor_delete_pet_successful">Pet deleted</string>
+    <string name="editor_delete_coin_successful">Delete successful</string>
 
     <!-- Toast message in editor when current pet has failed to be deleted [CHAR LIMIT=NONE] -->
-    <string name="editor_delete_pet_failed">Error with deleting pet</string>
+    <string name="editor_delete_coin_failed">Error with deleting</string>
 
     <!-- Dialog message to ask the user to confirm deleting the current pet [CHAR LIMIT=NONE] -->
     <string name="delete_dialog_msg">Delete this pet?</string>
@@ -81,7 +81,7 @@
 
     <!-- Dialog button text for the option to cancel deletion of the current pet [CHAR LIMIT=20] -->
     <string name="cancel">Cancel</string>
-    <string name="editor_delete_pet_failed_msg">Delete of pet data failed</string>
+    <string name="editor_delete_failed_msg">Delete of data failed</string>
     <string name="title_activity_series">activity_series</string>
     <string name="issue">Issue:</string>
     <string name="overall_grade_label">Overall grade:</string>

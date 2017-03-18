@@ -72,8 +72,9 @@
         <activity
             android:name=".SeriesEditActivity"
             android:parentActivityName=".SeriesActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             android:theme="@style/AppTheme.NoActionBar">
+            <!--android:windowSoftInputMode="stateHidden|adjustResize  "-->
            <!-- android:theme="@style/EditorTheme"> -->
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
