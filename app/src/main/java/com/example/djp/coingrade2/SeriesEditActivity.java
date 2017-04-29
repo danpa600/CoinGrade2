@@ -324,11 +324,6 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
             //try {
                 mObverseImage.setImageURI(Uri.fromFile(new File(mCurrentPhotoPath)));
                 mObverseImagePath = mCurrentPhotoPath;
-                //mImageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoURI);
-                //mObverseImage.setImageBitmap(mImageBitmap);
-            //} catch (IOException e) {
-            //    e.printStackTrace();
-            //}
         }
         if (requestCode == REQUEST_TAKE_REVERSE_PHOTO && resultCode == RESULT_OK) {
             //try {
@@ -532,7 +527,6 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
                 // If the pet hasn't changed, continue with navigating up to parent activity
                 // which is the {@link CatalogActivity}.
                 if (!mCoinHasChanged) {
-                    //NavUtils.navigateUpFromSameTask(SeriesEditActivity.this);
                     finish();
                     return true;
                 }
@@ -591,7 +585,6 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
     private void saveCoin() {
         // Read from input fields
         // Use trim to eliminate leading or trailing white space
-        //String noteString = mNoteEditText.getText().toString().trim();
         String notesString = mNotesEditText.getText().toString().trim();
 
         // Create a ContentValues object where column names are the keys,
@@ -659,7 +652,6 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
                 Toast.makeText(this, getString(R.string.editor_coin_update_failed), Toast.LENGTH_SHORT).show();
             } else {
                 // clear was successful, now remove the images
-                // mObverseImagePath;
                 if (mObverseImagePath != null) {
                     File dfile = (new File(mObverseImagePath));
                     if (dfile.exists()) {
@@ -682,7 +674,6 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
                 Toast.makeText(this, getString(R.string.editor_coin_update_failed), Toast.LENGTH_SHORT).show();
             } else {
                 // clear was successful, now remove the images
-                // mObverseImagePath;
                 if (mObverseImagePath != null) {
                     File dfile = (new File(mObverseImagePath));
                     if (dfile.exists()) {
