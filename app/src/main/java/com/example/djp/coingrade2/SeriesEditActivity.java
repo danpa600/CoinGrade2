@@ -32,8 +32,15 @@ import android.widget.Toast;
 
 import com.example.djp.coingrade2.data.PetContract;
 import com.example.djp.coingrade2.data.PetProvider;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageActivity;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,6 +53,8 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
     private Uri mCurrentPetUri;
     /** Identifier for the data loader */
     private static final int EXISTING_SERIES_LOADER = 0;
+    private static final int OBVERSE = 0;
+    private static final int REVERSE = 1;
 
     /** EditText field to enter the pet's name */
     private EditText mNotesEditText;
@@ -56,6 +65,9 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
     private ImageView mReverseImage;
     private String mObverseImagePath;
     private String mReverseImagePath;
+
+    // contains the type (obverse / reverse) of image being edited
+    private int mImageInEdit = OBVERSE;
 
     private int mGrade = PetContract.CoinSeriesEntry.GRADE_UNKNOWN;
     private int mObverseGrade = PetContract.CoinSeriesEntry.GRADE_UNKNOWN;
@@ -278,8 +290,19 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
     private View.OnTouchListener mTouchListenerObverseImage = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            mCoinHasChanged = true;
-            dispatchTakePictureIntent(REQUEST_TAKE_OBVERSE_PHOTO);
+            if (mObverseImagePath == null) {
+                mCoinHasChanged = true;
+                dispatchTakePictureIntent(REQUEST_TAKE_OBVERSE_PHOTO);
+            }
+            else { /*XXXXXXXXXXXXXXADDING CROP EDITINGXXXXXXXXXXXXXXXXXXX*/
+                if (mObverseImagePath != null) {
+                     photoURI = FileProvider.getUriForFile(getApplicationContext(),
+                            "com.example.android.fileprovider",
+                            new File(mObverseImagePath));
+                    mImageInEdit = OBVERSE;
+                    CropImage.activity(photoURI).start(SeriesEditActivity.this);
+                }
+            }
             return false;
         }
     };
@@ -287,8 +310,19 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
     private View.OnTouchListener mTouchListenerReverseImage = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            mCoinHasChanged = true;
-            dispatchTakePictureIntent(REQUEST_TAKE_REVERSE_PHOTO);
+            if (mReverseImagePath == null) {
+                mCoinHasChanged = true;
+                dispatchTakePictureIntent(REQUEST_TAKE_REVERSE_PHOTO);
+            }
+            else { /*XXXXXXXXXXXXXXADDING CROP EDITINGXXXXXXXXXXXXXXXXXXX*/
+                if (mReverseImagePath != null) {
+                    photoURI = FileProvider.getUriForFile(getApplicationContext(),
+                            "com.example.android.fileprovider",
+                            new File(mReverseImagePath));
+                    mImageInEdit = REVERSE;
+                    CropImage.activity(photoURI).start(SeriesEditActivity.this);
+                }
+            }
             return false;
         }
     };
@@ -330,7 +364,54 @@ public class SeriesEditActivity extends AppCompatActivity implements LoaderManag
             mReverseImage.setImageURI(Uri.fromFile(new File(mCurrentPhotoPath)));
             mReverseImagePath = mCurrentPhotoPath;
         }
+        /*XXXXXXXXXXXXXXADDING CROP EDITINGXXXXXXXXXXXXXXXXXXX*/
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+                if (mImageInEdit == OBVERSE) {
+                    savefile(resultUri, mObverseImagePath);
+                    mObverseImage.setImageURI(resultUri);
+                }
+                else if (mImageInEdit == REVERSE) {
+                    savefile(resultUri, mReverseImagePath);
+                    mReverseImage.setImageURI(resultUri);
+                }
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
     }
+
+    /* used to save the cropped image */
+    void savefile(Uri sourceuri, String file)
+    {
+        String sourceFilename= sourceuri.getPath();
+        String destinationFilename = file;
+
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
+
+        try {
+            bis = new BufferedInputStream(new FileInputStream(sourceFilename));
+            bos = new BufferedOutputStream(new FileOutputStream(destinationFilename, false));
+            byte[] buf = new byte[1024];
+            bis.read(buf);
+            do {
+                bos.write(buf);
+            } while(bis.read(buf) != -1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bis != null) bis.close();
+                if (bos != null) bos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     private File createImageFile() throws IOException {
         // Create an image file name
